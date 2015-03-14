@@ -7,7 +7,7 @@ public abstract class Parser<T extends Block> {
 
 	/**
 	 * Takes a line and checks to see if it is for this parser by using regex.
-	 * 
+	 *
 	 * @param line
 	 * @return
 	 */
@@ -16,7 +16,7 @@ public abstract class Parser<T extends Block> {
 	/**
 	 * Take the superBlock and the tokenizer for the line and return a block of
 	 * this parser's type.
-	 * 
+	 *
 	 * @param superBlock
 	 * @param tokenizer
 	 * @return

@@ -2,22 +2,21 @@ package com.zandor300.zs;
 
 /**
  * Represents a value.
- * 
- * @author Zandor300
  *
+ * @author Zandor300
  */
 public class Value {
 
-	private final Type type;
+	private final Type builtInType;
 	private Object value;
 
-	public Value(Type type, Object value) {
-		this.type = type;
+	public Value(Type builtInType, Object value) {
+		this.builtInType = builtInType;
 		this.value = value;
 	}
 
-	public Type getType() {
-		return type;
+	public Type getBuiltInType() {
+		return builtInType;
 	}
 
 	public Object getValue() {

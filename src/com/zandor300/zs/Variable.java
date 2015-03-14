@@ -7,8 +7,8 @@ public class Variable extends Value {
 	private final Block block;
 	private final String name;
 
-	public Variable(Block block, Type type, String name, Object value) {
-		super(type, value);
+	public Variable(Block block, Type builtInType, String name, Object value) {
+		super(builtInType, value);
 
 		this.block = block;
 		this.name = name;

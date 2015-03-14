@@ -1,8 +1,9 @@
 package com.zandor300.zs.block;
 
-import java.util.ArrayList;
-
 import com.zandor300.zs.Variable;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Represents a block of code.
@@ -15,17 +16,32 @@ public abstract class Block {
 
 	public Block(Block superBlock) {
 		this.superBlock = superBlock;
-		this.subBlocks = new ArrayList<>();
-		this.variables = new ArrayList<>();
+		this.subBlocks = new ArrayList<Block>();
+		this.variables = new ArrayList<Variable>();
 	}
 
 	/**
 	 * Return the superBlock;
-	 * 
+	 *
 	 * @return
 	 */
 	public Block getSuperBlock() {
 		return superBlock;
+	}
+
+	public ArrayList<Block> getBlockTree() {
+		ArrayList<Block> blocks = new ArrayList<Block>();
+
+		Block block = this;
+
+		do {
+			blocks.add(block);
+			block = block.getSuperBlock();
+		} while (block != null);
+
+		Collections.reverse(blocks);
+
+		return blocks;
 	}
 
 	public Block[] getSubBlocks() {
@@ -34,7 +50,7 @@ public abstract class Block {
 
 	/**
 	 * Add a subBlock to the superBlock.
-	 * 
+	 *
 	 * @param block
 	 */
 	public void addBlock(Block block) {
@@ -43,7 +59,7 @@ public abstract class Block {
 
 	/**
 	 * Get a variable by its name.
-	 * 
+	 *
 	 * @param name
 	 * @return
 	 */
@@ -58,7 +74,7 @@ public abstract class Block {
 
 	/**
 	 * Add a variable to the block.
-	 * 
+	 *
 	 * @param v
 	 */
 	public void addVariable(Variable v) {

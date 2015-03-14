@@ -1,5 +1,7 @@
 package com.zandor300.zs.block;
 
+import com.zandor300.zs.BuiltInType;
+import com.zandor300.zs.Matcher;
 import com.zandor300.zs.Parameter;
 import com.zandor300.zs.Type;
 import com.zandor300.zs.Value;
@@ -7,17 +9,28 @@ import com.zandor300.zs.Variable;
 
 public class Method extends Block {
 
-	private final String name;
-	private final Type type;
+	private final String name, type;
 	private final Parameter[] params;
 	private Value returnValue;
 
-	public Method(Block superBlock, String name, Type type, Parameter[] params) {
+	public Method(Block superBlock, String name, String type, Parameter[] params) {
 		super(superBlock);
 
 		this.name = name;
 		this.type = type;
 		this.params = params;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public Parameter[] getParams() {
+		return params;
 	}
 
 	@Override
@@ -26,7 +39,7 @@ public class Method extends Block {
 	}
 
 	public Value invoke(Value... values) {
-		// Invoke the method with the supplied values.
+		Type t = Matcher.match(type);
 
 		if (values.length != params.length) {
 			throw new IllegalArgumentException(
@@ -37,9 +50,9 @@ public class Method extends Block {
 			Parameter p = params[i];
 			Value v = values[i];
 
-			if (p.getType() != v.getType()) {
+			if (p.getType() != v.getBuiltInType()) {
 				throw new IllegalStateException("Parameter " + p.getName()
-						+ " should be " + p.getType() + ". Got " + v.getType());
+						+ " should be " + p.getType() + ". Got " + v.getBuiltInType());
 			}
 
 			addVariable(new Variable(this, p.getType(), p.getName(),
@@ -54,7 +67,7 @@ public class Method extends Block {
 			}
 		}
 
-		if (returnValue == null && type != Type.VOID) {
+		if (returnValue == null && t != BuiltInType.VOID) {
 			throw new IllegalStateException("Expected return value, got none.");
 		}
 
